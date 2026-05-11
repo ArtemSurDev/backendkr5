@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+
+# Python
+venv/
+.venv/
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# MacOS
+.DS_Store
+
+# WebStorm/JetBrains
+.idea/
