@@ -20,8 +20,8 @@
 2. Скачайте wheel-пакеты для офлайн сборки: `./backend/scripts/download_wheels.sh`
 3. Запустить все сервисы: `docker compose up -d --build`
 4. Открыть в браузере:
-   - Backend API: http://localhost:8081
-   - Frontend (dev): http://localhost:5173
+   - Backend API: http://localhost:8082
+   - Frontend (dev): http://localhost:5174
 
 ## Переменные окружения
 Описание всех переменных из `.env.example`.

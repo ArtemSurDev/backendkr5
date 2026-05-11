@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: exchange_user
       POSTGRES_PASSWORD: exchange_password
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - exchange_db_data:/var/lib/postgresql/data
     healthcheck:
@@ -33,7 +33,7 @@ services:
       DEFAULT_ADMIN_EMAIL: "admin@exchange.ru"
       DEFAULT_ADMIN_PASSWORD: "admin12345"
     ports:
-      - "8081:8081"
+      - "8082:8081"
     depends_on:
       db:
         condition: service_healthy
