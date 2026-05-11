@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: currency_exchange_db
+    environment:
+      POSTGRES_DB: currency_exchange
+      POSTGRES_USER: exchange_user
+      POSTGRES_PASSWORD: exchange_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - exchange_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exchange_user -d currency_exchange"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.org/simple}
+        PIP_TRUSTED_HOST: ${PIP_TRUSTED_HOST:-pypi.org}
+    container_name: currency_exchange_app
+    environment:
+      DATABASE_URL: postgresql+psycopg2://exchange_user:exchange_password@db:5432/currency_exchange
+      SECRET_KEY: "change-me-in-production"
+      ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+      DEFAULT_ADMIN_EMAIL: "admin@exchange.ru"
+      DEFAULT_ADMIN_PASSWORD: "admin12345"
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  exchange_db_data:
